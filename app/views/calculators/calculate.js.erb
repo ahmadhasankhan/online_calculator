@@ -1,0 +1,6 @@
+if ("<%= @message %>" == '' || "<%= @message %>" == null){
+    $('#result_data').text("<%= format_result(@result) %>");
+}else{
+    $('#result_data').text("");
+    alert("Please Correct The Expression: <%= @message %>");
+}
