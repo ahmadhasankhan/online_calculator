@@ -3,20 +3,16 @@ class CalculatorsController < ApplicationController
   end
 
   def calculate
-    @message = nil
-    begin
-      @result = Calculator.new.evaluate(params[:q])
-    rescue => e
-      @message = e
-      @result = nil
-    end
+    results = Calculator.new.evaluate(params[:q])
+    @message = results[:message]
+    @result = results[:result]
 
     respond_to do |format|
       if @result
-        format.js {render :calculate}
+        format.js {render :calculate, status: :ok}
         format.json {render json: @result, status: :ok}
       else
-        format.js {render :calculate}
+        format.js {render :calculate, status: :unprocessable_entity}
         format.json {render json: @result, status: :unprocessable_entity}
       end
     end
